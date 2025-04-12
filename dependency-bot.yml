@@ -1,0 +1,78 @@
+# dependency-bot.yml
+# Configuration file for the Dependency Bot
+
+# GitHub App settings
+app:
+  name: Dependency Version Bot
+  description: A bot that follows the Dependency Context Protocol to update package dependencies
+
+# Behavior settings
+settings:
+  # How often to check for updates (in hours)
+  checkInterval: 24
+
+  # Update strategy
+  updateStrategy:
+    # Whether to allow major version bumps
+    allowMajor: true
+    # Whether to allow minor version bumps
+    allowMinor: true
+    # Whether to allow patch version bumps
+    allowPatch: true
+
+  # PR settings
+  pullRequest:
+    # Labels to add to PRs
+    labels:
+      - dependencies
+      - automated
+    # Reviewers to assign (GitHub usernames)
+    reviewers: []
+    # Teams to assign (GitHub team slugs)
+    teamReviewers: []
+
+  # Security settings
+  security:
+    # Whether to check for security advisories
+    checkAdvisories: true
+    # Whether to prioritize security updates
+    prioritizeSecurityUpdates: true
+
+# File types to monitor
+fileTypes:
+  - name: npm
+    paths:
+      - package.json
+    ignorePackages:
+      - some-problematic-package
+
+  - name: python
+    paths:
+      - requirements.txt
+      - requirements/*.txt
+    ignorePackages:
+      - some-problematic-package
+
+  - name: ruby
+    paths:
+      - Gemfile
+    ignorePackages: []
+
+  - name: go
+    paths:
+      - go.mod
+    ignorePackages: []
+
+# Repositories to exclude from monitoring
+excludedRepositories:
+  - owner/repo-to-exclude
+  - another-owner/another-repo
+
+# Custom rules for specific repositories
+repositoryRules:
+  - repository: owner/special-repo
+    settings:
+      allowMajor: false
+      labels:
+        - dependencies
+        - needs-review
