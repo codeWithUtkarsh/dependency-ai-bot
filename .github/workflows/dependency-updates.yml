@@ -31,3 +31,13 @@ jobs:
           GITHUB_PRIVATE_KEY: ${{ secrets.DEPENDENCY_BOT_PRIVATE_KEY }}
           GITHUB_INSTALLATION_ID: ${{ secrets.DEPENDENCY_BOT_INSTALLATION_ID }}
         run: node dependency-bot.js
+
+      - name: Output debug info if failed
+        if: ${{ failure() }}
+        run: |
+          echo "Node.js version:"
+          node --version
+          echo "NPM version:"
+          npm --version
+          echo "Package.json content:"
+          cat package.json
